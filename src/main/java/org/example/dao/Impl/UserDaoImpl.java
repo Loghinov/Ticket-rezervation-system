@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 @Repository
@@ -16,7 +17,7 @@ public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
 
     @Override
     public User getByRoleId(long roleId) {
-        String query = "SELECT * FROM user WHERE role_id = ?";
+        String query = "SELECT * FROM users WHERE role_id = ?";
         User user = null;
         try (PreparedStatement statement = getConnection().prepareStatement(query)) {
 
@@ -63,7 +64,7 @@ public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
 
     @Override
     public List<User> getAll() {
-        String query = "SELECT * FROM user ";
+        String query = "SELECT * FROM users ";
         List<User> users = new ArrayList<>();
         try (PreparedStatement statement = getConnection().prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery();
@@ -87,9 +88,9 @@ public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
 
     @Override
     public User save(User user) {
-        String query = "INSERT INTO user (first_name, last_name, age, roleId) VALUES (?, ?, ?, ?)";
-
-        try (PreparedStatement statement = getConnection().prepareStatement(query)) {
+        String query = "INSERT INTO users (first_name, last_name, age, role_id) VALUES (?, ?, ?, ?)";
+        ResultSet resultSet = null;
+        try (PreparedStatement statement = getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setString(1, user.getFirstName());
             statement.setString(2, user.getLastName());
@@ -98,9 +99,12 @@ public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
 
 
 
-            int rowsAffected = statement.executeUpdate();
+            statement.executeUpdate();
+            resultSet = statement.getGeneratedKeys();
 
-            if (rowsAffected > 0) {
+            if (resultSet.next()) {
+                long id = resultSet.getLong(1);
+                user.setUserId(id);
                 System.out.println("User saved successfully.");
                 return user;
             } else {
@@ -116,7 +120,7 @@ public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
 
     @Override
     public User update(User user, String params) {
-        String query = "UPDATE user SET role_id = ? WHERE user_id = ?";
+        String query = "UPDATE users SET role_id = ? WHERE user_id = ?";
 
         try (PreparedStatement statement = getConnection().prepareStatement(query)) {
 
@@ -135,7 +139,7 @@ public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
 
     @Override
     public String delete(User user) {
-        String query = "DELETE FROM user WHERE user_id = ?";
+        String query = "DELETE FROM users WHERE user_id = ?";
 
         try (PreparedStatement statement = getConnection().prepareStatement(query)) {
 

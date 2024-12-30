@@ -3,6 +3,5 @@
 
     <includeAll path="db/changelog/create"/>
 
-<!--    <includeAll path="db/changelog/insert"/>-->
 
 </databaseChangeLog>

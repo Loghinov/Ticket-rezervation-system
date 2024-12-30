@@ -22,7 +22,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     public PaymentDto getPaymentById(long paymentId){
         Payment payment =paymentDao.getById(paymentId);
-        BookingDto bookingDto = bookingService.getBookingById(payment.getBookingId());
+        BookingDto bookingDto = bookingService.getBookingDtoById(payment.getBookingId());
 
         PaymentDto paymentDto = new PaymentDto(payment.getPaymentId(),bookingDto, payment.getFirstName(), payment.getLastName(), payment.getCardId(), payment.getPaymentStatus(), payment.getPaymentDate());
         return paymentDto;

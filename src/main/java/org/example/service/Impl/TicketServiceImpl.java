@@ -27,7 +27,7 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public TicketDto getTicketById(long ticketId) {
+    public TicketDto getTicketDtoById(long ticketId) {
         Ticket ticket = ticketDao.getById(ticketId);
         FlightDto flyId= flightService.getFlightById(ticket.getFlyId());
         Passenger passenger = passengerService.getPassengerById(ticket.getPassengerId());

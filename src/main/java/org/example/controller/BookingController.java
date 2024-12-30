@@ -20,7 +20,7 @@ public class BookingController {
     @GetMapping("/get-booking-by-id")
     public ResponseEntity<BookingDto> getBookingById(@RequestParam long bookingId){
         try{
-            BookingDto bookingDto = bookingService.getBookingById(bookingId);
+            BookingDto bookingDto = bookingService.getBookingDtoById(bookingId);
             if( bookingDto==null){
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }

@@ -5,8 +5,6 @@ import org.example.dto.BookingDto;
 import org.example.dto.TicketDto;
 import org.example.dto.UserDto;
 import org.example.entity.Booking;
-import org.example.entity.Ticket;
-import org.example.entity.User;
 import org.example.service.BookingService;
 import org.example.service.TicketService;
 import org.example.service.UserService;
@@ -26,10 +24,10 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public BookingDto getBookingById(long bookingId) {
+    public BookingDto getBookingDtoById(long bookingId) {
         Booking booking = bookingDao.getById(bookingId);
         UserDto userDto = userService.getUserById(booking.getUserId());
-        TicketDto ticketById = ticketService.getTicketById(booking.getTicketTurId());
+        TicketDto ticketById = ticketService.getTicketDtoById(booking.getTicketTurId());
         BookingDto bookingDto = new BookingDto(booking.getBookingId(), userDto, ticketById);
         return bookingDto;
     }
