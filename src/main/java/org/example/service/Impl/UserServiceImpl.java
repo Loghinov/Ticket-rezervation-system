@@ -8,6 +8,8 @@ import org.example.service.RolesService;
 import org.example.service.UserService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {
     private UserDao userDao;
@@ -34,18 +36,28 @@ public class UserServiceImpl implements UserService {
         user.setAge(userDto.getAge());
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
-        user =userDao.save(user);
+        user = userDao.save(user);
         userDto.setUserId(user.getUserId());
         return userDto;
     }
 
-    public String deleteUserById(Long userId) {
-        User user = userDao.getById(userId);
+    @Override
+    public UserDto update(long userId, UserDto userDto) {
+        return null;
+    }
 
-        if (user == null) {
-            throw new RuntimeException("User with ID " + userId + " not found.");
-        }
+    @Override
+    public UserDto save(UserDto userDto) {
+        return null;
+    }
 
-        return userDao.delete(userId);
+    @Override
+    public void delete(long userId) {
+
+    }
+
+    @Override
+    public List<User> getAll() {
+        return List.of();
     }
 }

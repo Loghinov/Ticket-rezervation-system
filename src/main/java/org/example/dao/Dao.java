@@ -1,9 +1,6 @@
 package org.example.dao;
 
-import org.springframework.stereotype.Repository;
-
 import java.util.List;
-@Repository
 
 public interface Dao<T> {
     T getById(long id);
@@ -14,5 +11,5 @@ public interface Dao<T> {
 
     T update(T t, String params);
 
-    String delete(long T);
+    String delete(T t);
 }
