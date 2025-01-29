@@ -30,54 +30,56 @@ public class UserDaoTest {
     public static List<User> userList;
     @Autowired
     private UserDao userDao;
+
     @BeforeAll
-    public static void setUp(){
-        userList= Stream.of(
+    public static void setUp() {
+        userList = Stream.of(
                 new User("Aleksei", "Smith", 34, 2),
                 new User("Vanea", "Lesan", 24, 1),
-                new User("Daniel", "Docks",54,3),
-                new User("Maks", "Park", 39,4),
-                new User("Philips", "Morpth", 26,5),
-                new User ("antonio", "fernandes", 24,3),
-                new User("Karim", "Benzema", 33,1),
+                new User("Daniel", "Docks", 54, 3),
+                new User("Maks", "Park", 39, 4),
+                new User("Philips", "Morpth", 26, 5),
+                new User("antonio", "fernandes", 24, 3),
+                new User("Karim", "Benzema", 33, 1),
                 new User("Lioneli", "Messi", 38, 3),
-                new User(" Pablo", "Alonso", 42,1),
-                new User("Didier", "Drogba", 54,2)
+                new User(" Pablo", "Alonso", 42, 1),
+                new User("Didier", "Drogba", 54, 2)
         ).toList();
     }
+
     @Test
-    void saveData(){
+    void saveAndDeleteData() {
         User user1 = userList.get(0);
-        User user =userDao.save(user1);
+        User user = userDao.save(user1);
         user1.setUserId(user.getUserId());
 
-        assertEquals(user1,user);
-        assertEquals(user1.getFirstName(),user.getFirstName());
-        assertEquals(user1.getUserId(), user.getUserId());
-    }
-    @Test
-    void getById(){
-        User user1 =userDao.save(userList.get(0));
-        User user =userDao.getById(user1.getUserId());
-
-        assertEquals(user1,user);
-        assertEquals(user1.getFirstName(),user.getFirstName());
+        assertEquals(user1, user);
+        assertEquals(user1.getFirstName(), user.getFirstName());
         assertEquals(user1.getUserId(), user.getUserId());
 
+        userDao.delete(user1);
     }
-    @Test
-    void getAll(){
 
-        List<User>userList=userDao.getAll();
+    @Test
+    void getById() {
+        User user1 = userDao.save(userList.get(0));
+        User user = userDao.getById(user1.getUserId());
+
+        assertEquals(user1, user);
+        assertEquals(user1.getFirstName(), user.getFirstName());
+        assertEquals(user1.getUserId(), user.getUserId());
+
+    }
+
+    @Test
+    void getAll() {
+
+        List<User> userList = userDao.getAll();
 
         assertNotNull(userList);
-        assertEquals(userList.size(),10);
-       assertEquals(userList.get(0),userList.get(0));
-       assertEquals(userList.get(1).getFirstName(),userList.get(1).getFirstName());
+        assertEquals(userList.size(), 10);
+
 
     }
 
-    @Test
-
-    }
 }

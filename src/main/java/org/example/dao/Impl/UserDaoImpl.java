@@ -138,12 +138,12 @@ public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
     }
 
     @Override
-    public String delete(long userId) {
+    public String delete(User user) {
         String query = "DELETE FROM users WHERE user_id = ?";
 
         try (PreparedStatement statement = getConnection().prepareStatement(query)) {
 
-            statement.setLong(1, userId);
+            statement.setLong(1, user.getUserId());
 
             int rowsAffected = statement.executeUpdate();
 
