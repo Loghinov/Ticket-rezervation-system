@@ -1,23 +1,23 @@
 package org.example.dto;
 
-import org.example.entity.Roles;
+import org.example.entity.Role;
 
 public class UserDto {
     private long userId;
     private String firstName;
     private String lastName;
     private int age;
-    private Roles roles;
+    private Role roleId;
 
     public UserDto() {
     }
 
-    public UserDto(long userId, String firstName, String lastName, int age, Roles roles) {
+    public UserDto(long userId, String firstName, String lastName, int age, Role roleId) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
-        this.roles = roles;
+        this.roleId = roleId;
     }
 
     public long getUserId() {
@@ -52,11 +52,11 @@ public class UserDto {
         this.age = age;
     }
 
-    public Roles getRoles() {
-        return roles;
+    public Role getRoles() {
+        return roleId;
     }
 
-    public void setRoles(Roles roles) {
-        this.roles = roles;
+    public void setRoles(Role role) {
+        this.roleId = role;
     }
 }

@@ -21,7 +21,7 @@ public class PassengerController {
     public ResponseEntity<Passenger> getPassengerById(@RequestParam long passengerId){
         try{
             Passenger passenger = passengerService.getPassengerById(passengerId);
-            if(passenger==null){
+            if(passenger ==null){
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
             return  new ResponseEntity<>(passenger, HttpStatus.OK);

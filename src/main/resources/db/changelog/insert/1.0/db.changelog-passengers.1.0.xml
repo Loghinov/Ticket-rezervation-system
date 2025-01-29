@@ -1,0 +1,18 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="sergiu " id="1-3">
+        <sql>INSERT INTO passenger (first_name, last_name, passport_number, citizenship, phone_number)
+            VALUES
+            ('John', 'Doe', 123456789, 'USA', '+1-555-1234'),
+            ('Jane', 'Smith', 987654321, 'UK', '+44-123-4567'),
+            ('Alice', 'Johnson', 456789123, 'Canada', '+1-555-5678'),
+            ('Bob', 'Brown', 789123456, 'Australia', '+61-123-7890'),
+            ('Charlie', 'Davis', 123123123, 'Germany', '+49-555-1234'),
+            ('Emily', 'Wilson', 321321321, 'France', '+33-555-6789'),
+            ('Frank', 'Taylor', 654654654, 'India', '+91-987-6543'),
+            ('Grace', 'Moore', 987987987, 'Japan', '+81-555-9876'),
+            ('Henry', 'Anderson', 111222333, 'Mexico', '+52-123-4567'),
+            ('Ivy', 'Thomas', 444555666, 'Italy', '+39-555-1234');</sql>
+    </changeSet>
+</databaseChangeLog>

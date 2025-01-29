@@ -29,6 +29,12 @@ public class DataBaseConfig {
         }
     }
 
+    public DataBaseConfig(String username, String password, String url){
+        this.url = url;
+        this.user = username;
+        this.password = password;
+    }
+
     // Getteri pentru proprietăți
     public String getUrl() {
         return url;

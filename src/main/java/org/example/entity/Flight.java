@@ -1,25 +1,27 @@
 package org.example.entity;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class Flight {
     private long flightId;
     private long departureAirportId;
     private long arrivalAirportId;
     private long airlineId;
-    private LocalDateTime departureTime;
-    private LocalDateTime arrivalTime;
     private double price;
+    private LocalDateTime timeDeparture;
+    private LocalDateTime timeArrival;
+
 
 
     public Flight() {};
-    public Flight(long flightId, long departureAirportId, long arrivalAirportId, long airlineId, LocalDateTime DepartureTime, LocalDateTime ArrivalTime, double price) {
+    public Flight(long flightId, long departureAirportId, long arrivalAirportId, long airlineId, LocalDateTime timeDeparture, LocalDateTime timeArrival, double price) {
         this.flightId = flightId;
         this.departureAirportId = departureAirportId;
         this.arrivalAirportId = arrivalAirportId;
         this.airlineId = airlineId;
-        this.departureTime = DepartureTime;
-        this.arrivalTime = ArrivalTime;
+        this.timeDeparture = timeDeparture;
+        this.timeArrival = timeArrival;
         this.price = price;
     }
 
@@ -55,18 +57,18 @@ public class Flight {
         this.airlineId = airlineId;
     }
 
-    public LocalDateTime getDepartureTime() {return departureTime;}
+    public LocalDateTime getTimeDeparture() {return timeDeparture;}
 
-    public void setDepartureTime(LocalDateTime departureTime) {
-        this.departureTime = departureTime;
+    public void setTimeDeparture(LocalDateTime timeDeparture) {
+        this.timeDeparture = timeDeparture;
     }
 
-    public LocalDateTime getArrivalTime() {
-        return arrivalTime;
+    public LocalDateTime getTimeArrival() {
+        return timeArrival;
     }
 
-    public void setArrivalTime(LocalDateTime arrivalTime) {
-        this.arrivalTime = arrivalTime;
+    public void setTimeArrival(LocalDateTime timeArrival) {
+        this.timeArrival = timeArrival;
     }
 
     public double getPrice() {
@@ -78,6 +80,18 @@ public class Flight {
     }
     @Override
     public String toString(){
-        return "FLight id: "+ flightId +" Departure Airport Id: "+departureAirportId+" Arrival Airport Id: "+arrivalAirportId+" Airline id: "+airlineId+" Time departure: "+ departureTime +" Time arrival: "+ arrivalTime +" Price: "+price;
+        return "FLight id: "+ flightId +" Departure Airport Id: "+departureAirportId+" Arrival Airport Id: "+arrivalAirportId+" Airline id: "+airlineId+" Time departure: "+ timeDeparture +" Time arrival: "+ timeArrival +" Price: "+price;
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Flight flight = (Flight) o;
+        return flightId == flight.flightId && departureAirportId==flight.departureAirportId && arrivalAirportId==flight.arrivalAirportId&& airlineId==flight.airlineId && price==flight.price && Objects.equals(timeDeparture, flight.timeDeparture) && Objects.equals(timeArrival, flight.timeArrival);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(flightId, departureAirportId, arrivalAirportId,  airlineId, price, timeDeparture, timeArrival);
     }
 }

@@ -23,7 +23,7 @@ public class AirportController {
     public ResponseEntity<Airport> getAirportById(@RequestParam long airportId){
         try{
             Airport airport = airportService.getAirportById(airportId);
-            if(airport==null){
+            if(airport ==null){
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
             return new ResponseEntity<>(airport, HttpStatus.OK);

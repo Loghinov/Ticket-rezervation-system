@@ -2,6 +2,7 @@ package org.example.entity;
 
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class Payment {
     private long paymentId;
@@ -82,5 +83,17 @@ public class Payment {
     @Override
     public String toString() {
         return "Payment id: "+ paymentId +" Booking id: "+bookingId+" First name: "+firstName+" Last name: "+lastName+" Card id: "+cardId+" Payment status: "+paymentStatus+" Payment date: "+paymentDate;
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Payment payment = (Payment) o;
+        return paymentId== payment.paymentId && bookingId == payment.bookingId && cardId == payment.cardId && Objects.equals(firstName, payment.firstName) && Objects.equals(lastName, payment.lastName)&& Objects.equals(paymentStatus, payment.paymentStatus)&& Objects.equals(paymentDate, payment.paymentDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(paymentId, bookingId, firstName, lastName, cardId, paymentStatus, paymentDate );
     }
 }

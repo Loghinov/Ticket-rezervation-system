@@ -4,4 +4,5 @@ import org.example.dto.BookingDto;
 
 public interface BookingService {
     BookingDto getBookingDtoById(long bookingId);
+    BookingDto addBooling(BookingDto bookingDto);
 }

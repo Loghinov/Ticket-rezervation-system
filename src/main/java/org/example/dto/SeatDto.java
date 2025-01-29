@@ -1,21 +1,21 @@
 package org.example.dto;
 
-import org.example.entity.Flight;
+import org.example.entity.Aircraft;
 
 public class SeatDto {
     private long seatId;
     private String seatCode;
     private boolean seatAvailable;
-    private FlightDto flightDto;
+    private Aircraft aircraft;
 
     public SeatDto(){}
 
 
-    public SeatDto(long seatId, String seatCode, boolean seatAvailable, FlightDto flightDto) {
+    public SeatDto(long seatId, String seatCode, boolean seatAvailable, Aircraft aircraft) {
         this.seatId = seatId;
         this.seatCode = seatCode;
         this.seatAvailable = seatAvailable;
-        this.flightDto = flightDto;
+        this.aircraft = aircraft;
     }
 
     public long getSeatId() {
@@ -42,11 +42,11 @@ public class SeatDto {
         this.seatAvailable = seatAvailable;
     }
 
-    public FlightDto getFlightDto() {
-        return flightDto;
+    public Aircraft getAircraft() {
+        return aircraft;
     }
 
-    public void setFlightDto(FlightDto flightDto) {
-        this.flightDto = flightDto;
+    public void setAircraft(Aircraft aircraft) {
+        this.aircraft = aircraft;
     }
 }

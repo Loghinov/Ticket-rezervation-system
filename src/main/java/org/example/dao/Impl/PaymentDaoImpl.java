@@ -5,10 +5,7 @@ import org.example.dao.PaymentDao;
 import org.example.entity.Payment;
 import org.springframework.stereotype.Repository;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -95,7 +92,8 @@ public class PaymentDaoImpl extends AbstractDaoImpl<Payment> implements PaymentD
     public Payment save(Payment payment) {
         String query = "INSERT INTO payment (booking_id, first_name, last_name, card_id, payment_status, payment_date) VALUES (?, ?, ?, ?, ?,?)";
 
-        try (PreparedStatement statement = getConnection().prepareStatement(query)) {
+        try (PreparedStatement statement = getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+
 
             statement.setString(1, payment.getFirstName());
             statement.setString(2, payment.getLastName());

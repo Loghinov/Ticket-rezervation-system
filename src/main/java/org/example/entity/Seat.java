@@ -1,17 +1,19 @@
 package org.example.entity;
 
+import java.util.Objects;
+
 public class Seat {
     private long seatId;
     private String seatCode;
     private boolean seatAvailable;
-    private long flyId;
+    private long aircraftId;
 
     public Seat() {};
-    public Seat(long seatId, String seatCode, boolean seatAvailable, long flyId){
+    public Seat(long seatId, String seatCode, boolean seatAvailable, long aircraftId){
         this.seatId = seatId;
         this.seatCode = seatCode;
         this.seatAvailable = seatAvailable;
-        this.flyId = flyId;
+        this.aircraftId = aircraftId;
     }
 
     public long getSeatId() {
@@ -38,16 +40,30 @@ public class Seat {
         this.seatAvailable = seatAvailable;
     }
 
-    public long getFlyId() {
-        return flyId;
+    public long getAircraftId() {
+        return aircraftId;
     }
 
-    public void setFlyId(long flyId) {
-        this.flyId = flyId;
+    public void setAircraftId(long aircraftId) {
+        this.aircraftId = aircraftId;
     }
+
     @Override
     public String toString() {
-        return "Seat id: "+ seatId +"Seat code: "+seatCode+"Seat Available: "+seatAvailable+"Fly id: "+flyId;
+        return "Seat id: "+ seatId +"Seat code: "+seatCode+"Seat Available: "+seatAvailable+"Fly id: "+ aircraftId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Seat seat = (Seat) o;
+        return seatId == seat.seatId && seatAvailable == seat.seatAvailable && aircraftId == seat.aircraftId && Objects.equals(seatCode, seat.seatCode);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(seatId, seatCode, seatAvailable, aircraftId);
     }
 
 }

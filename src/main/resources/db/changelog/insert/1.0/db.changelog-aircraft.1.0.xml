@@ -1,0 +1,21 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="sergiu " id="1-1">
+        <sql>
+            <![CDATA[
+            INSERT INTO aircraft (seat_number, registration_number, model) VALUES
+            (180, 123456789, 'Boeing 737'),
+            (250, 987654321, 'Airbus A320'),
+            (330, 456123789, 'Boeing 777'),
+            (190, 789456123, 'Airbus A321'),
+            (270, 321654987, 'Boeing 787'),
+            (300, 654789321, 'Airbus A330'),
+            (150, 159753456, 'Ember 190'),
+            (220, 753951852, 'Boeing 757'),
+            (260, 852456753, 'Airbus A350'),
+            (310, 951852456, 'Boeing 747');
+            ]]>
+            </sql>
+    </changeSet>
+</databaseChangeLog>

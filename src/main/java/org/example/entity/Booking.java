@@ -1,5 +1,7 @@
 package org.example.entity;
 
+import java.util.Objects;
+
 public class Booking {
     private long bookingId;
     private long userId;
@@ -49,5 +51,17 @@ public class Booking {
     @Override
     public String toString(){
         return " Booking id: "+ bookingId +" User id: "+userId+" Ticked tur id: "+ ticketTurId +" Ticked Retur id: "+ ticketReturId;
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Booking booking= (Booking) o;
+        return bookingId==booking.bookingId && userId==booking.userId && ticketTurId==booking.ticketTurId && ticketReturId==booking.ticketReturId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(bookingId, userId, ticketTurId, ticketReturId);
     }
 }

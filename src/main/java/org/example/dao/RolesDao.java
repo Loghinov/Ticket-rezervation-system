@@ -1,7 +1,7 @@
 package org.example.dao;
 
-import org.example.entity.Roles;
+import org.example.entity.Role;
 
-public interface RolesDao extends Dao<Roles> {
-    Roles getByRoleName (String roleName);
+public interface RolesDao extends Dao<Role> {
+    Role getByRoleName (String roleName);
 }

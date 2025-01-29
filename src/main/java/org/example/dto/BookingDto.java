@@ -3,15 +3,17 @@ package org.example.dto;
 public class BookingDto {
     private long bookingId;
     private UserDto userDto;
-    private TicketDto ticketId;
+    private TicketDto ticketDtoTur;
+    private TicketDto ticketDtoRetur;
 
     public BookingDto(){
     }
 
-    public BookingDto(long bookingId, UserDto userDto, TicketDto ticketId) {
+    public BookingDto(long bookingId, UserDto userDto, TicketDto ticketDtoTur, TicketDto ticketDtoRetur) {
         this.bookingId = bookingId;
         this.userDto = userDto;
-        this.ticketId = ticketId;
+        this.ticketDtoTur = ticketDtoTur;
+        this.ticketDtoRetur=ticketDtoTur;
     }
 
     public long getBookingId() {
@@ -30,11 +32,19 @@ public class BookingDto {
         this.userDto = userId;
     }
 
-    public TicketDto getTicketId() {
-        return ticketId;
+    public TicketDto getTicketDtoTur() {
+        return ticketDtoTur;
     }
 
-    public void setTicketId(TicketDto ticketId) {
-        this.ticketId = ticketId;
+    public void setTicketDtoTur(TicketDto ticketDtoTur) {
+        this.ticketDtoTur = ticketDtoTur;
+    }
+
+    public TicketDto getTicketDtoRetur() {
+        return ticketDtoRetur;
+    }
+
+    public void setTicketDtoRetur(TicketDto ticketDtoRetur) {
+        this.ticketDtoRetur = ticketDtoRetur;
     }
 }

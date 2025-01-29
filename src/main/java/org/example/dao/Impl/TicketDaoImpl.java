@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 @Repository
@@ -16,7 +17,7 @@ public class TicketDaoImpl extends AbstractDaoImpl<Ticket> implements TicketDao 
 
     @Override
     public Ticket getByPassengerId(long passengerId) {
-        String query = "SELECT * FROM ticket WHERE passenger_id = ?";
+        String query = "SELECT * FROM tickets WHERE passenger_id = ?";
         Ticket ticket = null;
         try (PreparedStatement statement = getConnection().prepareStatement(query)) {
 
@@ -39,7 +40,7 @@ public class TicketDaoImpl extends AbstractDaoImpl<Ticket> implements TicketDao 
 
     @Override
     public Ticket getById(long id) {
-        String query = "SELECT * FROM ticket WHERE ticket_id = ?";
+        String query = "SELECT * FROM tickets WHERE ticket_id = ?";
         try (PreparedStatement statement = getConnection().prepareStatement(query)) {
 
             statement.setLong(1, id);
@@ -60,7 +61,7 @@ public class TicketDaoImpl extends AbstractDaoImpl<Ticket> implements TicketDao 
 
     @Override
     public List<Ticket> getAll() {
-        String query = "SELECT * FROM ticket ";
+        String query = "SELECT * FROM tickets ";
         List<Ticket> tickets = new ArrayList<>();
         try (PreparedStatement statement = getConnection().prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery();
@@ -82,19 +83,23 @@ public class TicketDaoImpl extends AbstractDaoImpl<Ticket> implements TicketDao 
 
     @Override
     public Ticket save(Ticket ticket) {
-        String query = "INSERT INTO ticket (fly_id_tur, passenger_id, seat_id) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO tickets (fly_id, passenger_id, seat_id) VALUES ( ?, ?, ?)";
 
-        try (PreparedStatement statement = getConnection().prepareStatement(query)) {
+        try (PreparedStatement statement = getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setLong(1, ticket.getFlyId());
-            statement.setLong(3, ticket.getPassengerId());
-            statement.setLong(4, ticket.getSeatId());
+            statement.setLong(2, ticket.getPassengerId());
+            statement.setLong(3, ticket.getSeatId());
 
 
 
             int rowsAffected = statement.executeUpdate();
+            ResultSet resultSet = statement.getGeneratedKeys();
 
-            if (rowsAffected > 0) {
+
+            if (resultSet.next()) {
+                long id = resultSet.getLong(1);
+                ticket.setTicketId(id);
                 System.out.println("Ticket saved successfully.");
                 return ticket;
             } else {
@@ -110,7 +115,7 @@ public class TicketDaoImpl extends AbstractDaoImpl<Ticket> implements TicketDao 
 
     @Override
     public Ticket update(Ticket ticket, String params) {
-        String query = "UPDATE ticket SET passenger_id = ? WHERE ticket_id = ?";
+        String query = "UPDATE tickets SET passenger_id = ? WHERE ticket_id = ?";
 
         try (PreparedStatement statement = getConnection().prepareStatement(query)) {
 
@@ -129,7 +134,7 @@ public class TicketDaoImpl extends AbstractDaoImpl<Ticket> implements TicketDao 
 
     @Override
     public String delete(Ticket ticket) {
-        String query = "DELETE FROM ticket WHERE ticket_id = ?";
+        String query = "DELETE FROM tickets WHERE ticket_id = ?";
 
         try (PreparedStatement statement = getConnection().prepareStatement(query)) {
 

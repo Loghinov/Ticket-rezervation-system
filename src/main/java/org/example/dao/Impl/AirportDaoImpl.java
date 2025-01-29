@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 @Repository
@@ -18,8 +19,8 @@ public class AirportDaoImpl extends AbstractDaoImpl<Airport> implements AirportD
 
     @Override
     public Airport getByCode(long airlineCode) {
-        String query = "Select * from airport where airport_id=?";
-        Airport airport=null;
+        String query = "Select * from airports where airport_id=?";
+        Airport airport =null;
         try (PreparedStatement statement = getConnection().prepareStatement(query)){
             statement.setLong(1, airlineCode);
             ResultSet resultSet = statement.executeQuery();
@@ -28,7 +29,7 @@ public class AirportDaoImpl extends AbstractDaoImpl<Airport> implements AirportD
                 String airportName = resultSet.getString("airport_name");
                 String airportCity = resultSet.getString("airport_city");
                 String airportCountry= resultSet.getString("airport_country");
-                airport=new Airport(airportId, airlineCode, airportName, airportCity, airportCity);
+                airport =new Airport(airportId, airlineCode, airportName, airportCity, airportCity);
             }
             return airport;
         }catch (SQLException e){
@@ -38,7 +39,7 @@ public class AirportDaoImpl extends AbstractDaoImpl<Airport> implements AirportD
 
     @Override
     public Airport getById(long id) {
-        String query="Select * from airport where airport_id=?";
+        String query="Select * from airports where airport_id=?";
         try(PreparedStatement statement=getConnection().prepareStatement(query)){
             statement.setLong(1,id);
             ResultSet resultSet= statement.executeQuery();
@@ -59,7 +60,7 @@ public class AirportDaoImpl extends AbstractDaoImpl<Airport> implements AirportD
 
     @Override
     public List<Airport> getAll() {
-        String query="Select * from airport";
+        String query="Select * from airports";
         List<Airport> airports=new ArrayList<>();
         try (PreparedStatement statement=getConnection().prepareStatement(query)){
             ResultSet resultSet = statement.executeQuery();
@@ -79,8 +80,9 @@ public class AirportDaoImpl extends AbstractDaoImpl<Airport> implements AirportD
 
     @Override
     public Airport save(Airport airport) {
-        String query ="Select into airport(airport_code, airport_name, airport_city, airport_country ) values(?,?,?,?)";
-        try(PreparedStatement statement = getConnection().prepareStatement(query)){
+        String query ="Select into airports(airport_code, airport_name, airport_city, airport_country ) values(?,?,?,?)";
+        try (PreparedStatement statement = getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+
             statement.setLong(1, airport.getAirportCode());
             statement.setString(2, airport.getAirportName());
             statement.setString(3, airport.getAirportCity());
@@ -89,7 +91,7 @@ public class AirportDaoImpl extends AbstractDaoImpl<Airport> implements AirportD
             int rowsAffected = statement.executeUpdate();
             if(rowsAffected>0){
                 System.out.println("Airport saved successfully");
-                return  airport;
+                return airport;
             }else{
                 System.out.println("Failed to save airport");
                 return airport;
@@ -101,7 +103,7 @@ public class AirportDaoImpl extends AbstractDaoImpl<Airport> implements AirportD
 
     @Override
     public Airport update(Airport airport, String params) {
-        String query = "UPDATE airport SET airport_code = ? WHERE airport_id = ?";
+        String query = "UPDATE airports SET airport_code = ? WHERE airport_id = ?";
         try (PreparedStatement statement = getConnection().prepareStatement(query)){
             statement.setLong(1, Long.parseLong(params));
             statement.setLong(2, airport.getAirportId());
@@ -115,7 +117,7 @@ public class AirportDaoImpl extends AbstractDaoImpl<Airport> implements AirportD
 
     @Override
     public String delete(Airport airport) {
-        String query ="Select * from airport where airport_id=?";
+        String query ="Select * from airports where airport_id=?";
         try (PreparedStatement statement = getConnection().prepareStatement(query)) {
             statement.setLong(1, airport.getAirportId());
             int rowsaAffected = statement.executeUpdate();

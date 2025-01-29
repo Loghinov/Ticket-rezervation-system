@@ -5,10 +5,7 @@ import org.example.dao.FlightDao;
 import org.example.entity.Flight;
 import org.springframework.stereotype.Repository;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +18,7 @@ public class FlightDaoImpl extends AbstractDaoImpl<Flight> implements FlightDao 
 
     @Override
     public Flight getByDepartureAirportId(long departureAirportId) {
-        String query = "SELECT * FROM flight WHERE departure_airport_id = ?";
+        String query = "SELECT * FROM flights WHERE departure_airport_id = ?";
         Flight flight = null;
         try (PreparedStatement statement = getConnection().prepareStatement(query)) {
 
@@ -50,13 +47,13 @@ public class FlightDaoImpl extends AbstractDaoImpl<Flight> implements FlightDao 
 
     @Override
     public Flight getById(long id) {
-        String query = "select * from flight where flight_id = ?";
+        String query = "select * from flights where flight_id = ?";
         try (PreparedStatement statement=getConnection().prepareStatement(query)) {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                return new Flight (
+                return new Flight(
                         resultSet.getLong("flight_id"),
                         resultSet.getLong("departure_airport_id"),
                         resultSet.getLong("arrival_airport_id"),
@@ -74,8 +71,8 @@ public class FlightDaoImpl extends AbstractDaoImpl<Flight> implements FlightDao 
 
     @Override
     public List<Flight> getAll() {
-        String query = "SELECT * FROM flight ";
-        List<Flight> flight = new ArrayList<>();
+        String query = "SELECT * FROM flights ";
+        List<Flight> flights = new ArrayList<>();
         try (PreparedStatement statement = getConnection().prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery();
 
@@ -87,23 +84,25 @@ public class FlightDaoImpl extends AbstractDaoImpl<Flight> implements FlightDao 
                 LocalDateTime departureTime = resultSet.getTimestamp("departure_time").toLocalDateTime();
                 LocalDateTime arrivalTime = resultSet.getTimestamp("arrival_time").toLocalDateTime();
                 double price = resultSet.getDouble("price");
-                flight.add(new Flight(id, departureAirportId, arrivalAirportId, airlineId, departureTime, arrivalTime, price));
+                flights.add(new Flight(id, departureAirportId, arrivalAirportId, airlineId, departureTime, arrivalTime, price));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return (flight);
+        return (flights);
     }
 
     @Override
     public Flight save(Flight flight) {
-        String query = "insert into flight (departure_airport_id, arrival_airport_id, airline_id, departure_time, arrival_time, price) values(?,?,?,?,?,?)";
-        try (PreparedStatement statement = getConnection().prepareStatement(query)) {
+        String query = "insert into flights (departure_airport_id, arrival_airport_id, airline_id, departure_time, arrival_time, price) values(?,?,?,?,?,?)";
+        try (PreparedStatement statement = getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+
+
             statement.setLong(1, flight.getDepartureAirportId());
             statement.setLong(2, flight.getArrivalAirportId());
             statement.setLong(3, flight.getAirlineId());
-            statement.setTimestamp(4, Timestamp.valueOf(flight.getDepartureTime()));
-            statement.setTimestamp(5, Timestamp.valueOf(flight.getArrivalTime()));
+            statement.setTimestamp(4, Timestamp.valueOf(flight.getTimeDeparture()));
+            statement.setTimestamp(5, Timestamp.valueOf(flight.getTimeArrival()));
             statement.setDouble(6, flight.getPrice());
 
 
@@ -124,7 +123,7 @@ public class FlightDaoImpl extends AbstractDaoImpl<Flight> implements FlightDao 
 
     @Override
     public Flight update(Flight flight, String params) {
-        String query = "UPDATE flight SET departure_airport_id = ? WHERE flight_id = ?";
+        String query = "UPDATE flights SET departure_airport_id = ? WHERE flight_id = ?";
 
         try (PreparedStatement statement = getConnection().prepareStatement(query)) {
 
@@ -143,7 +142,7 @@ public class FlightDaoImpl extends AbstractDaoImpl<Flight> implements FlightDao 
 
     @Override
     public String delete(Flight flight) {
-        String query = "DELETE FROM flight WHERE flight_id = ?";
+        String query = "DELETE FROM flights WHERE flight_id = ?";
 
         try (PreparedStatement statement = getConnection().prepareStatement(query)) {
 

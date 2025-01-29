@@ -4,10 +4,7 @@ import org.example.dto.BookingDto;
 import org.example.service.BookingService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/rest/api/booking")
@@ -26,6 +23,19 @@ public class BookingController {
             }
             return new ResponseEntity<>(bookingDto, HttpStatus.OK);
         }catch(Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @PostMapping("/save-booking")
+    public ResponseEntity<BookingDto> saveBooking(@RequestBody BookingDto booking){
+        try{
+            booking=bookingService.addBooling(booking);
+            if(booking==null){
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return  new ResponseEntity<>(booking,HttpStatus.OK);
+        }
+        catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

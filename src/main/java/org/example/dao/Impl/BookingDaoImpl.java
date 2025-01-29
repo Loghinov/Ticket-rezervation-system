@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class BookingDaoImpl extends AbstractDaoImpl<Booking> implements BookingD
 
     @Override
     public Booking getByUserId(long userId) {
-        String query = "Select * from booking where user_id = ?";
+        String query = "Select * from bookings where user_id = ?";
         Booking booking = null;
         try (PreparedStatement statement = getConnection().prepareStatement(query)) {
             statement.setLong(1, userId);
@@ -40,7 +41,7 @@ public class BookingDaoImpl extends AbstractDaoImpl<Booking> implements BookingD
 
     @Override
     public Booking getById(long id) {
-        String query = "select * from booking where booking_id = ?";
+        String query = "select * from bookings where booking_id = ?";
         try (PreparedStatement statement = getConnection().prepareStatement(query)) {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
@@ -61,8 +62,8 @@ public class BookingDaoImpl extends AbstractDaoImpl<Booking> implements BookingD
 
     @Override
     public List<Booking> getAll() {
-        String query = "select * from booking";
-        List<Booking> booking = new ArrayList<>();
+        String query = "select * from bookings";
+        List<Booking> bookings = new ArrayList<>();
         try (PreparedStatement statement = getConnection().prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery();
 
@@ -71,18 +72,19 @@ public class BookingDaoImpl extends AbstractDaoImpl<Booking> implements BookingD
                 long userId = resultSet.getLong("user_id");
                 long ticketTurId = resultSet.getLong("ticket_tur_id");
                 long ticketReturId = resultSet.getLong("ticket_retur_id");
-                booking.add(new Booking(id, userId, ticketTurId, ticketReturId));
+                bookings.add(new Booking(id, userId, ticketTurId, ticketReturId));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return (booking);
+        return (bookings);
     }
 
     @Override
     public Booking save(Booking booking) {
-        String query = "Insert into booking (user_id, ticket_tur_id, ticket_retur_id) values(?,?,?)";
-        try (PreparedStatement statement = getConnection().prepareStatement(query)) {
+        String query = "Insert into bookings (user_id, ticket_tur_id, ticket_retur_id) values(?,?,?)";
+        try (PreparedStatement statement = getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+
             statement.setLong(1, booking.getUserId());
             statement.setLong(2, booking.getTicketTurId());
             statement.setLong(3, booking.getTicketReturId());
@@ -103,7 +105,7 @@ public class BookingDaoImpl extends AbstractDaoImpl<Booking> implements BookingD
 
     @Override
     public Booking update(Booking booking, String params) {
-        String query = "Update booking set user_id = where booking_id = ?";
+        String query = "Update bookings set user_id = where booking_id = ?";
         try (PreparedStatement statement = getConnection().prepareStatement(query)) {
             statement.setLong(1, Long.parseLong(params));
             statement.setLong(2, booking.getBookingId());
@@ -117,7 +119,7 @@ public class BookingDaoImpl extends AbstractDaoImpl<Booking> implements BookingD
 
     @Override
     public String delete(Booking booking) {
-        String query = "Delete from booking where booking_id = ?";
+        String query = "Delete from bookings where booking_id = ?";
         try (PreparedStatement statement = getConnection().prepareStatement(query)) {
             statement.setLong(1, booking.getBookingId());
             int rowsAffected = statement.executeUpdate();

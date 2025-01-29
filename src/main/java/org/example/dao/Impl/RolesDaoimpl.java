@@ -2,22 +2,23 @@ package org.example.dao.Impl;
 
 import org.example.configuration.DataBaseConfig;
 import org.example.dao.RolesDao;
-import org.example.entity.Roles;
+import org.example.entity.Role;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 @Repository
-public class RolesDaoimpl extends AbstractDaoImpl<Roles> implements RolesDao {
+public class RolesDaoimpl extends AbstractDaoImpl<Role> implements RolesDao {
     public RolesDaoimpl(DataBaseConfig dataBaseConfig) {super(dataBaseConfig);}
 
     @Override
-    public Roles getByRoleName(String roleName) {
+    public Role getByRoleName(String roleName) {
         String query = "SELECT * FROM roles WHERE role_name = ?";
-        Roles roles = null;
+        Role role = null;
         try (PreparedStatement statement = getConnection().prepareStatement(query)) {
 
             statement.setString(1, roleName);
@@ -25,15 +26,15 @@ public class RolesDaoimpl extends AbstractDaoImpl<Roles> implements RolesDao {
 
             if (resultSet.next()) {
                 long id = resultSet.getLong("role_id");
-                roles = new Roles(id, roleName);
+                role = new Role(id, roleName);
             }
-            return roles;
+            return role;
         } catch (SQLException e) {
             throw new RuntimeException("Error while retrieving roles by role name.");
         }
     }
     @Override
-    public Roles getById(long id) {
+    public Role getById(long id) {
         String query = "SELECT * FROM roles WHERE role_id = ?";
         try (PreparedStatement statement = getConnection().prepareStatement(query)) {
 
@@ -41,7 +42,7 @@ public class RolesDaoimpl extends AbstractDaoImpl<Roles> implements RolesDao {
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                return new Roles(
+                return new Role(
                         resultSet.getLong("role_id"),
                         resultSet.getString("role_name")
                 );
@@ -53,9 +54,9 @@ public class RolesDaoimpl extends AbstractDaoImpl<Roles> implements RolesDao {
     }
 
     @Override
-    public List<Roles> getAll() {
+    public List<Role> getAll() {
         String query = "SELECT * FROM roles ";
-        List<Roles> roles = new ArrayList<>();
+        List<Role> roles = new ArrayList<>();
         try (PreparedStatement statement = getConnection().prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery();
 
@@ -63,7 +64,7 @@ public class RolesDaoimpl extends AbstractDaoImpl<Roles> implements RolesDao {
                 long id = resultSet.getLong("passenger_id");
                 String roleName = resultSet.getString("role_name");
 
-                roles.add(new Roles(id, roleName));
+                roles.add(new Role(id, roleName));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -72,21 +73,22 @@ public class RolesDaoimpl extends AbstractDaoImpl<Roles> implements RolesDao {
     }
 
     @Override
-    public Roles save(Roles roles) {
+    public Role save(Role role) {
         String query = "INSERT INTO roles (role_name) VALUES (?)";
 
-        try (PreparedStatement statement = getConnection().prepareStatement(query)) {
+        try (PreparedStatement statement = getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
-            statement.setString(1, roles.getRoleName());
+
+            statement.setString(1, role.getRoleName());
 
             int rowsAffected = statement.executeUpdate();
 
             if (rowsAffected > 0) {
                 System.out.println("Roles saved successfully.");
-                return roles;
+                return role;
             } else {
                 System.out.println("Failed to save roles.");
-                return roles;
+                return role;
             }
 
         } catch (SQLException e) {
@@ -96,18 +98,18 @@ public class RolesDaoimpl extends AbstractDaoImpl<Roles> implements RolesDao {
     }
 
     @Override
-    public Roles update(Roles roles, String params) {
+    public Role update(Role role, String params) {
         String query = "UPDATE roles SET role_name = ? WHERE role_id = ?";
 
         try (PreparedStatement statement = getConnection().prepareStatement(query)) {
 
             statement.setLong(1, Long.parseLong(params)); // seat_number             // model
-            statement.setLong(2, roles.getRolesId());
+            statement.setLong(2, role.getRoleId());
 
             statement.executeUpdate();
 
-            roles.setRoleName(String.valueOf(Long.parseLong(params)));
-            return roles;
+            role.setRoleName(String.valueOf(Long.parseLong(params)));
+            return role;
 
         } catch (SQLException e) {
             throw new RuntimeException("EROOORRRRR");
@@ -115,12 +117,12 @@ public class RolesDaoimpl extends AbstractDaoImpl<Roles> implements RolesDao {
     }
 
     @Override
-    public String delete(Roles roles) {
+    public String delete(Role role) {
         String query = "DELETE FROM roles WHERE roles_id = ?";
 
         try (PreparedStatement statement = getConnection().prepareStatement(query)) {
 
-            statement.setLong(1, roles.getRolesId());
+            statement.setLong(1, role.getRoleId());
 
             int rowsAffected = statement.executeUpdate();
 

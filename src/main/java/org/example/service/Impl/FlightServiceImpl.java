@@ -32,7 +32,7 @@ public class FlightServiceImpl implements FlightService {
         Airport arrivalAirport = airportService.getAirportById(flight.getArrivalAirportId());
         Airline airline = airlineService.getAirlineById(flight.getAirlineId());
 
-        FlightDto flightDto = new FlightDto(flight.getFlightId(), departureAirport, arrivalAirport, flight.getDepartureTime(), flight.getArrivalTime(), flight.getPrice(), airline);
+        FlightDto flightDto = new FlightDto(flight.getFlightId(), departureAirport, arrivalAirport, flight.getTimeDeparture(), flight.getTimeArrival(), flight.getPrice(), airline);
         return flightDto;
     }
 }

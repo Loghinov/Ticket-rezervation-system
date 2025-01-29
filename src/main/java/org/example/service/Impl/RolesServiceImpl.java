@@ -1,7 +1,7 @@
 package org.example.service.Impl;
 
 import org.example.dao.RolesDao;
-import org.example.entity.Roles;
+import org.example.entity.Role;
 import org.example.service.RolesService;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +14,8 @@ public class RolesServiceImpl implements RolesService {
     }
 
     @Override
-    public Roles getRoleById(long roleId) {
-        Roles roles = rolesDao.getById(roleId);
-        return roles;
+    public Role getRoleById(long roleId) {
+        Role role = rolesDao.getById(roleId);
+        return role;
     }
 }

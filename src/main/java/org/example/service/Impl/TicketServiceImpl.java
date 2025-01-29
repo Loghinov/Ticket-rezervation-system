@@ -33,7 +33,13 @@ public class TicketServiceImpl implements TicketService {
         Passenger passenger = passengerService.getPassengerById(ticket.getPassengerId());
         SeatDto seatDto = seatService.getSeatById(ticket.getSeatId());
 
-        TicketDto ticketDto = new TicketDto(ticket.getTicketId(), flyId,passenger,seatDto);
+        TicketDto ticketDto = new TicketDto(ticket.getTicketId(), flyId, passenger,seatDto);
         return ticketDto;
     }
+
+    @Override
+    public Ticket addTicket(Ticket ticket) {
+        return ticketDao.save(ticket);
+    }
+
 }

@@ -1,0 +1,12 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="sergiu " id="1-4">
+        <sql>INSERT INTO airport (airport_code, airport_name, airport_city, airport_country) VALUES
+            (101, 'Los Angeles International Airport', 'Los Angeles', 'USA'),
+            (102, 'John F. Kennedy International Airport', 'New York', 'USA'),
+            (103, 'London Heathrow Airport', 'London', 'UK'),
+            (104, 'Tokyo Haneda Airport', 'Tokyo', 'Japan'),
+            (105, 'Dubai International Airport', 'Dubai', 'UAE');</sql>
+    </changeSet>
+</databaseChangeLog>

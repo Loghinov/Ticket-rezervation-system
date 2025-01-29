@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 @Repository
@@ -18,7 +19,7 @@ public class AirlineDaoImpl extends AbstractDaoImpl<Airline> implements AirlineD
 
     @Override
     public Airline getByCode(long code) {
-        String query = "Select * from airline where airline_code = ?";
+        String query = "Select * from airlines where airline_code = ?";
         Airline airline = null;
         try (PreparedStatement statement = getConnection().prepareStatement(query)) {
             statement.setLong(1, code);
@@ -37,7 +38,7 @@ public class AirlineDaoImpl extends AbstractDaoImpl<Airline> implements AirlineD
 
     @Override
     public Airline getById(long id) {
-        String query = "SELECT * FROM airline WHERE airline_id = ?";
+        String query = "SELECT * FROM airlines WHERE airline_id = ?";
         try (PreparedStatement statement = getConnection().prepareStatement(query)) {
 
             statement.setLong(1, id);
@@ -58,8 +59,8 @@ public class AirlineDaoImpl extends AbstractDaoImpl<Airline> implements AirlineD
 
     @Override
     public List<Airline> getAll() {
-        String query = "SELECT * FROM airline ";
-        List<Airline> airline = new ArrayList<>();
+        String query = "SELECT * FROM airlines ";
+        List<Airline> airlines = new ArrayList<>();
         try (PreparedStatement statement = getConnection().prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery();
 
@@ -67,19 +68,20 @@ public class AirlineDaoImpl extends AbstractDaoImpl<Airline> implements AirlineD
                 long id = resultSet.getLong("airline_id");
                 long code = resultSet.getLong("airline_code");
                 String name = resultSet.getString("airline_name");
-                airline.add(new Airline(id, code, name));
+                airlines.add(new Airline(id, code, name));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return (airline);
+        return (airlines);
     }
 
     @Override
     public Airline save(Airline airline) {
-        String query = "INSERT INTO airline (airline_code, airline_name) VALUES (?, ?)";
+        String query = "INSERT INTO airlines (airline_code, airline_name) VALUES (?, ?)";
 
-        try (PreparedStatement statement = getConnection().prepareStatement(query)) {
+        try (PreparedStatement statement = getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+
 
             // Set the parameters for the PreparedStatement
             statement.setLong(1, airline.getAirlineCode());
@@ -104,7 +106,7 @@ public class AirlineDaoImpl extends AbstractDaoImpl<Airline> implements AirlineD
 
     @Override
     public Airline update(Airline airline, String params) {
-        String query = "UPDATE airline SET airline_code = ? WHERE airline_id = ?";
+        String query = "UPDATE airlines SET airline_code = ? WHERE airline_id = ?";
 
         try (PreparedStatement statement = getConnection().prepareStatement(query)) {
 
@@ -123,7 +125,7 @@ public class AirlineDaoImpl extends AbstractDaoImpl<Airline> implements AirlineD
 
     @Override
     public String delete(Airline airline) {
-        String query = "DELETE FROM airline WHERE airline_id = ?";
+        String query = "DELETE FROM airlines WHERE airline_id = ?";
 
         try (PreparedStatement statement = getConnection().prepareStatement(query)) {
 

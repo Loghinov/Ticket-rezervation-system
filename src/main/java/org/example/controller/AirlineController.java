@@ -22,7 +22,7 @@ public class AirlineController {
     public ResponseEntity<Airline> getAirlineById(@RequestParam long airlineId){
         try{
             Airline airline = airlineService.getAirlineById(airlineId);
-            if(airline==null){
+            if(airline ==null){
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
             return new ResponseEntity<>(airline, HttpStatus.OK);

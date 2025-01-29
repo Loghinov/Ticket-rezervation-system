@@ -1,0 +1,18 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="sergiu " id="1-3">
+        <sql>INSERT INTO ticket (fly_id, passenger_id, seat_id)
+            VALUES
+            (1, 1, 101),
+            (3, 2, 102),
+            (5, 3, 103),
+            (7, 4, 104),
+            (9, 5, 105),
+            (1, 6, 106),
+            (3, 7, 107),
+            (5, 8, 108),
+            (7, 9, 109),
+            (9, 10, 110);</sql>
+    </changeSet>
+</databaseChangeLog>

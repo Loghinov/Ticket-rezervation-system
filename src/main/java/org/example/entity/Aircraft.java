@@ -1,6 +1,7 @@
 package org.example.entity;
 
 
+import java.util.Objects;
 
 public class Aircraft {
     private long aircraftId;
@@ -51,5 +52,17 @@ public class Aircraft {
     @Override
     public String toString(){
         return "Aircraft Id: "+ aircraftId +" Seat number: "+seatNumber+" Registration number: "+registrationNumber+" Model: "+model;
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Aircraft aircraft= (Aircraft) o;
+        return aircraftId==aircraft.aircraftId && seatNumber== aircraft.seatNumber && registrationNumber==aircraft.registrationNumber && Objects.equals(model, aircraft.model);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(aircraftId, seatNumber, registrationNumber, model);
     }
 }

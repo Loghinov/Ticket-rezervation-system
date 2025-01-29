@@ -1,6 +1,6 @@
 package org.example.controller;
 
-import org.example.entity.Roles;
+import org.example.entity.Role;
 import org.example.service.RolesService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,13 +19,13 @@ public class RolesConroller {
     }
 
     @GetMapping("/get-roles-by-id")
-    public ResponseEntity<Roles> getRolesById(@RequestParam long rolesId){
+    public ResponseEntity<Role> getRolesById(@RequestParam long rolesId){
         try{
-            Roles roles = rolesService.getRoleById(rolesId);
-            if(roles==null){
+            Role role = rolesService.getRoleById(rolesId);
+            if(role ==null){
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
-            return new ResponseEntity<>(roles, HttpStatus.OK);
+            return new ResponseEntity<>(role, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

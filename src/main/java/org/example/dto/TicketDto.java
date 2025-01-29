@@ -4,18 +4,18 @@ import org.example.entity.Passenger;
 
 public class TicketDto {
     private long ticketId;
-    private FlightDto flyId;
-    private Passenger passengerId;
-    private SeatDto seatId;
+    private FlightDto flightDto;
+    private Passenger passenger;
+    private SeatDto seatDto;
 
 
     public TicketDto (){}
 
-    public TicketDto(long ticketId, FlightDto flyId, Passenger passengerId, SeatDto seatId) {
+    public TicketDto(long ticketId, FlightDto flightDto, Passenger passenger, SeatDto seatDto) {
         this.ticketId = ticketId;
-        this.flyId = flyId;
-        this.passengerId = passengerId;
-        this.seatId = seatId;
+        this.flightDto = flightDto;
+        this.passenger = passenger;
+        this.seatDto = seatDto;
     }
 
     public long getTicketId() {
@@ -26,27 +26,27 @@ public class TicketDto {
         this.ticketId = ticketId;
     }
 
-    public FlightDto getFlyId() {
-        return flyId;
+    public FlightDto getFlightDto() {
+        return flightDto;
     }
 
-    public void setFlyId(FlightDto flyId) {
-        this.flyId = flyId;
+    public void setFlightDto(FlightDto flightDto) {
+        this.flightDto = flightDto;
     }
 
-    public Passenger getPassengerId() {
-        return passengerId;
+    public Passenger getPassenger() {
+        return passenger;
     }
 
-    public void setPassengerId(Passenger passengerId) {
-        this.passengerId = passengerId;
+    public void setPassenger(Passenger passenger) {
+        this.passenger = passenger;
     }
 
-    public SeatDto getSeatId() {
-        return seatId;
+    public SeatDto getSeatDto() {
+        return seatDto;
     }
 
-    public void setSeatId(SeatDto seatId) {
-        this.seatId = seatId;
+    public void setSeatDto(SeatDto seatDto) {
+        this.seatDto = seatDto;
     }
 }

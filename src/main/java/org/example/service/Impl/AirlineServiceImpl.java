@@ -10,7 +10,6 @@ public class AirlineServiceImpl implements AirlineService {
     private final AirlineDao airlineDao;
 
     public AirlineServiceImpl(AirlineDao airlineDao){
-
         this.airlineDao=airlineDao;
     }
     @Override

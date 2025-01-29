@@ -14,7 +14,7 @@ public class AirportServiceImpl implements AirportService {
 
     @Override
     public Airport getAirportById(long airportId) {
-         Airport airport=airportDao.getById(airportId);
+         Airport airport =airportDao.getById(airportId);
         return airport;
     }
 }

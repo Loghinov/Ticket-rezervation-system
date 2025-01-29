@@ -1,7 +1,6 @@
 package org.example.controller;
 
 import org.example.dto.SeatDto;
-import org.example.entity.Seat;
 import org.example.service.SeatService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

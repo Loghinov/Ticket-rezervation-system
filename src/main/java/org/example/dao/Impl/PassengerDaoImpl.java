@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 @Repository
@@ -89,7 +90,8 @@ public class PassengerDaoImpl extends AbstractDaoImpl<Passenger> implements Pass
     public Passenger save(Passenger passenger) {
         String query = "INSERT INTO passenger (first_name, last_name, passport_number, citizenship, phone_number) VALUES (?, ?, ?, ?, ?)";
 
-        try (PreparedStatement statement = getConnection().prepareStatement(query)) {
+        try (PreparedStatement statement = getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+
 
             statement.setString(1, passenger.getFirstName());
             statement.setString(2, passenger.getLastName());

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 @Repository
@@ -84,11 +85,12 @@ public class SeatDaoImpl extends AbstractDaoImpl<Seat> implements SeatDao {
     public Seat save(Seat seat) {
         String query = "INSERT INTO seats (seat_code, seat_available, fly_id) VALUES (?, ?, ?)";
 
-        try (PreparedStatement statement = getConnection().prepareStatement(query)) {
+        try (PreparedStatement statement = getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+
 
             statement.setString(2, seat.getSeatCode());
             statement.setBoolean(3, seat.getSeatAvailable());
-            statement.setLong(4, seat.getFlyId());
+            statement.setLong(4, seat.getAircraftId());
 
 
 

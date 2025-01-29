@@ -19,14 +19,14 @@ public class FlightDto {
 
     }
 
-    public FlightDto(long id, Airport departureAirport, Airport arrivalAirport,  LocalDateTime departureTime, LocalDateTime arrivalTime, double price, Airline airline) {
+    public FlightDto(long id, Airport departureAirport, Airport arrivalAirport, LocalDateTime departureTime, LocalDateTime arrivalTime, double price, Airline airline) {
         this.id = id;
         this.departureAirport = departureAirport;
         this.arrivalAirport = arrivalAirport;
         this.departureTime = departureTime;
         this.arrivalTime = arrivalTime;
         this.price = price;
-        this.airline= airline;
+        this.airline = airline;
     }
 
     public long getId() {
